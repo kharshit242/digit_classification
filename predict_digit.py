@@ -1,9 +1,31 @@
 import numpy as np
-from tensorflow.keras.models import load_model
+import tensorflow as tf
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense
 from PIL import Image
 
-# Load the model
-model = load_model("mnist_cnn_model.h5")
+# Rebuild the model architecture (same as in Colab)
+def create_model():
+    inputs = Input(shape=(28, 28, 1))
+    x = Conv2D(32, kernel_size=3, activation="relu")(inputs)
+    x = MaxPooling2D(pool_size=2)(x)
+    x = Conv2D(64, kernel_size=3, activation="relu")(x)
+    x = MaxPooling2D(pool_size=2)(x)
+    x = Flatten()(x)
+    x = Dense(128, activation="relu")(x)
+    outputs = Dense(10, activation="softmax")(x)
+    
+    model = Model(inputs=inputs, outputs=outputs)
+    model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+    return model
+
+# Create model and load weights
+model = create_model()
+try:
+    model.load_weights("mnist_cnn_model.h5")
+    print("Model weights loaded successfully!")
+except:
+    print("Could not load weights - using untrained model")
 
 def preprocess_image(image):
     image = image.convert("L")  # Grayscale
