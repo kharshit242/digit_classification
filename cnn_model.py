@@ -25,5 +25,6 @@ model = Model(inputs=inputs, outputs=outputs)
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 model.fit(x_train, y_train, epochs=5, validation_data=(x_test, y_test))
 
-# Save model
+# Save model with TensorFlow 2.15 format
 model.save("mnist_cnn_model.h5")
+print("Model saved successfully with TensorFlow 2.15")

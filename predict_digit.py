@@ -3,7 +3,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 
 # Load the model
-model = load_model("mnist_cnn_model.keras")
+model = load_model("mnist_cnn_model.h5")
 
 def preprocess_image(image):
     image = image.convert("L")  # Grayscale
