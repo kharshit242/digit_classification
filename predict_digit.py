@@ -38,5 +38,7 @@ def preprocess_image(image):
 
 def predict_digit(image):
     preprocessed = preprocess_image(image)
-    prediction = model.predict(preprocessed)
-    return np.argmax(prediction)
+    prediction = model.predict(preprocessed, verbose=0)
+    predicted_digit = np.argmax(prediction)
+    confidence = np.max(prediction)  # Get the highest probability
+    return predicted_digit, confidence
